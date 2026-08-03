@@ -8,6 +8,7 @@
     const urlsInput = document.getElementById('urlsInput').value.trim();
     const count = parseInt(document.getElementById('countInput').value);
     const delay = parseInt(document.getElementById('delayInput').value);
+    const redirectUrl = document.getElementById('redirectInput').value.trim();
     const messageDiv = document.getElementById('popupMessage');
 
     // Validate inputs
@@ -49,9 +50,10 @@
 
     function openNext() {
       if (openedCount >= totalToOpen) {
-        // All done, close this tab
+        // All done, replace this tab with the user's chosen URL
         setTimeout(() => {
-          window.close();
+          const targetUrl = redirectUrl || 'https://www.google.com';
+          window.location.replace(targetUrl);
         }, 500); // Slight delay to ensure the last window command registers
         return;
       }
@@ -77,6 +79,9 @@
 
   <label for="delayInput">Delay between opens (ms):</label>
   <input type="number" id="delayInput" min="0" value="500" /><br/><br/>
+
+  <label for="redirectInput">When all tabs are opened, this tab will turn into:</label><br/>
+  <input type="text" id="redirectInput" size="60" placeholder="https://www.google.com" value="https://www.google.com" /><br/><br/>
 
   <button onclick="startOpening()">Start</button>
   <p id="popupMessage" style="color: red; font-weight: bold;"></p>
